@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | MA Developers</title>
+    <style>
+        :root{--white:#fff;--off-white:#f8f9fa;--black:#111;--gray:#6c757d;--border:#dee2e6;--shadow:0 8px 40px rgba(0,0,0,0.1)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Inter','Segoe UI',sans-serif;
+            background:var(--off-white);
+            min-height:100vh;
+            display:flex;align-items:center;justify-content:center;
+        }
+        .login-box{
+            background:var(--white);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:45px 35px;
+            width:100%;max-width:400px;
+            text-align:center;
+            box-shadow:var(--shadow);
+        }
+        .login-box img{width:60px;height:60px;border-radius:50%;margin-bottom:18px}
+        .login-box h2{font-size:1.5rem;font-weight:800;margin-bottom:6px;color:var(--black)}
+        .login-box p{color:var(--gray);font-size:0.85rem;margin-bottom:28px}
+        .form-group{margin-bottom:16px;text-align:left}
+        .form-group label{display:block;margin-bottom:6px;font-size:0.78rem;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+        .form-group input{
+            width:100%;padding:12px 16px;
+            border:1px solid var(--border);border-radius:8px;
+            font-family:inherit;font-size:0.9rem;transition:0.3s;
+        }
+        .form-group input:focus{outline:none;border-color:var(--black)}
+        .btn-login{
+            width:100%;padding:14px;
+            background:var(--black);color:var(--white);
+            border:none;border-radius:8px;font-weight:700;
+            cursor:pointer;font-size:0.95rem;transition:0.3s;
+            font-family:inherit;margin-top:8px;
+        }
+        .btn-login:hover{background:#000}
+        .error-msg{color:#e74c3c;font-size:0.8rem;margin-top:10px;display:none}
+        .back-link{display:block;margin-top:20px;color:var(--gray);text-decoration:none;font-size:0.84rem}
+        .back-link:hover{color:var(--black)}
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <img src="https://i.postimg.cc/DZbR6RMj/Chat-GPT-Image-May-8-2026-11-17-36-PM.png" alt="MA Developers">
+        <h2>Admin Login</h2>
+        <p>MA Developers Dashboard</p>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="admin@madevelopers.com" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-login">Sign In</button>
+            <p class="error-msg" id="errorMsg">Invalid credentials!</p>
+        </form>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+    <script>
+        const ADMIN_EMAIL='admin@madevelopers.com';
+        const ADMIN_PASSWORD='MAdev2024Secure';
+        function handleLogin(e){
+            e.preventDefault();
+            const email=document.getElementById('email').value.trim();
+            const password=document.getElementById('password').value.trim();
+            if(email===ADMIN_EMAIL&&password===ADMIN_PASSWORD){
+                localStorage.setItem('ma_dev_admin','true');
+                window.location.href='/admin-dashboard';
+            }else{
+                document.getElementById('errorMsg').style.display='block';
+                setTimeout(()=>document.getElementById('errorMsg').style.display='none',3000);
+            }
+        }
+        if(localStorage.getItem('ma_dev_admin')==='true') window.location.href='/admin-dashboard';
+    </script>
+</body>
+</html>
