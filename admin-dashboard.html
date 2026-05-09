@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MA Developers</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root{--white:#fff;--off-white:#f8f9fa;--black:#111;--gray:#6c757d;--border:#dee2e6;--red:#e74c3c;--green:#27ae60;--shadow:0 2px 15px rgba(0,0,0,0.06)}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter','Segoe UI',sans-serif;background:var(--off-white);color:var(--black);min-height:100vh}
+        
+        .admin-nav{
+            background:var(--white);border-bottom:1px solid var(--border);
+            padding:0 24px;display:flex;justify-content:space-between;
+            align-items:center;height:60px;position:sticky;top:0;z-index:100;
+        }
+        .admin-nav .logo{font-weight:800;font-size:1rem}
+        .admin-nav a{color:var(--gray);text-decoration:none;font-size:0.85rem;margin-right:16px}
+        .btn-logout{
+            background:transparent;border:1px solid var(--red);color:var(--red);
+            padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;
+            font-size:0.8rem;transition:0.3s;font-family:inherit;
+        }
+        .btn-logout:hover{background:var(--red);color:var(--white)}
+        
+        .dashboard{padding:30px 24px;max-width:1100px;margin:0 auto}
+        .tabs{display:flex;gap:8px;margin-bottom:28px;flex-wrap:wrap}
+        .tab-btn{
+            padding:10px 22px;border-radius:8px;border:1px solid var(--border);
+            background:var(--white);color:var(--gray);cursor:pointer;
+            font-family:inherit;font-size:0.85rem;font-weight:500;transition:0.3s;
+        }
+        .tab-btn.active{background:var(--black);color:var(--white);border-color:var(--black)}
+        
+        .tab-content{display:none}
+        .tab-content.active{display:block}
+        
+        .card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px}
+        .card h3{font-size:1rem;font-weight:700;margin-bottom:18px}
+        
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;margin-bottom:5px;font-size:0.75rem;font-weight:600;color:var(--gray);text-transform:uppercase}
+        .form-group input,.form-group textarea,.form-group select{
+            width:100%;padding:10px 14px;border:1px solid var(--border);
+            border-radius:6px;font-family:inherit;font-size:0.85rem;resize:vertical;
+        }
+        .form-group textarea{min-height:70px}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--black)}
+        
+        .btn{ padding:10px 22px;border-radius:6px;font-weight:600;cursor:pointer;transition:0.3s;border:none;font-family:inherit;font-size:0.85rem }
+        .btn-dark{background:var(--black);color:var(--white)}
+        .btn-dark:hover{background:#000}
+        .btn-red{background:var(--red);color:var(--white)}
+        .btn-sm{padding:5px 14px;font-size:0.75rem}
+        
+        .list-item{
+            display:flex;justify-content:space-between;align-items:center;
+            padding:14px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px;
+        }
+        .list-item:last-child{border-bottom:none}
+        .item-info h4{font-size:0.9rem;font-weight:600}
+        .item-info span{font-size:0.75rem;color:var(--gray)}
+        .badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:0.68rem;font-weight:600}
+        .badge-important{background:#fde8e8;color:var(--red)}
+        
+        .toast-container{position:fixed;bottom:24px;right:24px;z-index:9999}
+        .toast{background:var(--black);color:var(--white);padding:14px 22px;border-radius:8px;margin-top:8px;animation:slideIn 0.3s ease;font-size:0.84rem}
+        @keyframes slideIn{from{opacity:0;transform:translateX(100%)}to{opacity:1;transform:translateX(0)}}
+        
+        .empty-state{text-align:center;padding:30px;color:var(--gray)}
+    </style>
+</head>
+<body>
+    <script>if(localStorage.getItem('ma_dev_admin')!=='true') window.location.href='/admin-login'</script>
+
+    <nav class="admin-nav">
+        <div class="logo">MA Developers | Admin</div>
+        <div>
+            <a href="/">View Site</a>
+            <button class="btn-logout" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="dashboard">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('projects')">Projects</button>
+            <button class="tab-btn" onclick="switchTab('announcements')">Announcements</button>
+            <button class="tab-btn" onclick="switchTab('messages')">Messages</button>
+        </div>
+
+        <!-- Projects Tab -->
+        <div class="tab-content active" id="tab-projects">
+            <div class="card">
+                <h3>Add Project</h3>
+                <form onsubmit="addProject(event)">
+                    <div class="form-group"><label>Title</label><input type="text" id="pTitle" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="pDesc"></textarea></div>
+                    <div class="form-group"><label>Image URL</label><input type="url" id="pImage"></div>
+                    <div class="form-group"><label>Technologies (comma separated)</label><input type="text" id="pTech"></div>
+                    <div class="form-group"><label>Live URL</label><input type="url" id="pLive"></div>
+                    <div class="form-group"><label>GitHub URL</label><input type="url" id="pGithub"></div>
+                    <button type="submit" class="btn btn-dark">Add Project</button>
+                </form>
+            </div>
+            <div class="card"><h3>All Projects</h3><div id="projectsList"><div class="empty-state">Loading...</div></div></div>
+        </div>
+
+        <!-- Announcements Tab -->
+        <div class="tab-content" id="tab-announcements">
+            <div class="card">
+                <h3>Post Announcement</h3>
+                <form onsubmit="addAnnouncement(event)">
+                    <div class="form-group"><label>Title</label><input type="text" id="aTitle" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="aDesc" required></textarea></div>
+                    <div class="form-group"><label><input type="checkbox" id="aImportant" style="width:auto;margin-right:8px;">Mark Important</label></div>
+                    <button type="submit" class="btn btn-dark">Post</button>
+                </form>
+            </div>
+            <div class="card"><h3>All Announcements</h3><div id="announcementsList"><div class="empty-state">Loading...</div></div></div>
+        </div>
+
+        <!-- Messages Tab -->
+        <div class="tab-content" id="tab-messages">
+            <div class="card"><h3>Contact Messages</h3><div id="messagesList"><div class="empty-state">Loading...</div></div></div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://bmudvnppazuktxsvacts.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJtdWR2bnBwYXp1a3R4c3ZhY3RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY4MTk4MDAsImV4cCI6MjAzMjM5NTgwMH0.sb_publishable_REz_v5IUbHuqmFMWdhbjmg__rIvg97z'
+        );
+
+        function showToast(msg){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast';t.textContent=msg;c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300)},3000)}
+        function logout(){localStorage.removeItem('ma_dev_admin');window.location.href='/admin-login'}
+        function switchTab(tab){
+            document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+            document.getElementById('tab-'+tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        async function addProject(e){
+            e.preventDefault();
+            const {error}=await supabase.from('projects').insert([{
+                title:document.getElementById('pTitle').value,
+                description:document.getElementById('pDesc').value,
+                image_url:document.getElementById('pImage').value,
+                technologies:document.getElementById('pTech').value,
+                live_url:document.getElementById('pLive').value,
+                github_url:document.getElementById('pGithub').value
+            }]);
+            if(error)showToast('Error!');
+            else{showToast('Project added!');e.target.reset();loadProjects();}
+        }
+
+        async function loadProjects(){
+            const {data}=await supabase.from('projects').select('*').order('created_at',{ascending:false});
+            const list=document.getElementById('projectsList');
+            if(!data||data.length===0){list.innerHTML='<div class="empty-state">No projects.</div>';return}
+            list.innerHTML=data.map(p=>`
+                <div class="list-item">
+                    <div class="item-info"><h4>${p.title}</h4><span>${new Date(p.created_at).toLocaleDateString()}</span></div>
+                    <button class="btn btn-red btn-sm" onclick="deleteItem('projects','${p.id}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function addAnnouncement(e){
+            e.preventDefault();
+            const {error}=await supabase.from('announcements').insert([{
+                title:document.getElementById('aTitle').value,
+                description:document.getElementById('aDesc').value,
+                important:document.getElementById('aImportant').checked
+            }]);
+            if(error)showToast('Error!');
+            else{showToast('Announcement posted!');e.target.reset();loadAnnouncements();}
+        }
+
+        async function loadAnnouncements(){
+            const {data}=await supabase.from('announcements').select('*').order('created_at',{ascending:false});
+            const list=document.getElementById('announcementsList');
+            if(!data||data.length===0){list.innerHTML='<div class="empty-state">No announcements.</div>';return}
+            list.innerHTML=data.map(a=>`
+                <div class="list-item">
+                    <div class="item-info">
+                        <h4>${a.important?'<span class="badge badge-important">Important</span> ':''}${a.title}</h4>
+                        <span>${new Date(a.created_at).toLocaleDateString()}</span>
+                    </div>
+                    <button class="btn btn-red btn-sm" onclick="deleteItem('announcements','${a.id}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function loadMessages(){
+            const {data}=await supabase.from('messages').select('*').order('created_at',{ascending:false});
+            const list=document.getElementById('messagesList');
+            if(!data||data.length===0){list.innerHTML='<div class="empty-state">No messages.</div>';return}
+            list.innerHTML=data.map(m=>`
+                <div class="list-item">
+                    <div class="item-info"><h4>${m.name} (${m.email})</h4><span>${m.message}</span></div>
+                    <button class="btn btn-red btn-sm" onclick="deleteItem('messages','${m.id}')">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteItem(table,id){
+            if(!confirm('Delete?'))return;
+            const {error}=await supabase.from(table).delete().eq('id',id);
+            if(error)showToast('Error!');
+            else{
+                showToast('Deleted!');
+                if(table==='projects')loadProjects();
+                if(table==='announcements')loadAnnouncements();
+                if(table==='messages')loadMessages();
+            }
+        }
+
+        loadProjects();
+        loadAnnouncements();
+        loadMessages();
+    </script>
+</body>
+</html>
