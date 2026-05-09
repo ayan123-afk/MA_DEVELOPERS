@@ -3,480 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MA Developers | Muhammad Ayan</title>
+    <title>MA Developers | Muhammad Ayan - SaaS & Web Development</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #ffffff;
+            --bg-secondary: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --primary: #0f172a;
+            --primary-hover: #1e293b;
+            --accent: #3b82f6;
+            --accent-light: #eff6ff;
+            --green: #10b981;
+            --green-light: #ecfdf5;
+            --purple: #8b5cf6;
+            --purple-light: #f5f3ff;
+            --orange: #f59e0b;
+            --orange-light: #fffbeb;
+            --red: #ef4444;
+            --red-light: #fef2f2;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 25px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.04);
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --transition: all 0.2s ease;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #ffffff;
-            color: #111111;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 32px;
         }
 
         /* NAVBAR */
         .navbar {
-            background: #fff;
-            border-bottom: 1px solid #e0e0e0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
             position: sticky;
             top: 0;
             z-index: 100;
+            padding: 0;
         }
-
         .nav-inner {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 65px;
-            padding: 0 20px;
+            height: 68px;
+            padding: 0 32px;
         }
-
-        .logo {
+        .nav-brand {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
-            color: #111;
+        }
+        .nav-brand img {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+        }
+        .nav-brand span {
+            font-size: 1.25rem;
             font-weight: 700;
-            font-size: 1.2rem;
+            color: var(--text);
+            letter-spacing: -0.3px;
         }
-
-        .logo img {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-        }
-
         .nav-links {
             display: flex;
-            gap: 25px;
+            gap: 32px;
             list-style: none;
+            align-items: center;
         }
-
         .nav-links a {
-            color: #555;
+            color: var(--text-secondary);
             text-decoration: none;
             font-size: 0.9rem;
             font-weight: 500;
+            transition: var(--transition);
         }
-
-        .nav-links a:hover {
-            color: #000;
+        .nav-links a:hover { color: var(--text); }
+        .nav-cta {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 600 !important;
         }
-
-        /* SECTIONS */
-        .section {
-            padding: 70px 0;
-        }
-
-        .section-gray {
-            background: #f5f5f5;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #777;
-            margin-bottom: 40px;
-        }
+        .nav-cta:hover { background: var(--primary-hover); }
 
         /* HERO */
         .hero {
+            padding: 100px 0 80px;
             text-align: center;
-            padding: 80px 0 50px;
+            position: relative;
         }
-
-        .hero img {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 20px;
-            border: 3px solid #eee;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .hero p {
-            color: #777;
-            max-width: 550px;
-            margin: 0 auto 25px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 30px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.8rem;
             font-weight: 600;
+            margin-bottom: 28px;
+            border: 1px solid #bfdbfe;
+        }
+        .hero-badge .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+        .hero h1 .highlight {
+            color: var(--accent);
+        }
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
             text-decoration: none;
-            margin: 5px;
+            transition: var(--transition);
             border: none;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-family: inherit;
         }
-
-        .btn-black {
-            background: #111;
+        .btn-primary {
+            background: var(--primary);
             color: #fff;
         }
-
-        .btn-outline {
-            border: 2px solid #111;
-            color: #111;
-            background: transparent;
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 1px solid var(--border);
         }
+        .btn-secondary:hover { background: var(--bg-secondary); }
+        .btn-sm { padding: 8px 16px; font-size: 0.8rem; border-radius: 8px; }
 
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 0.75rem;
-            border-radius: 20px;
+        /* STATS */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2.4rem; font-weight: 800; color: var(--text); letter-spacing: -1px; }
+        .stat-label { font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px; font-weight: 500; }
+
+        /* SECTIONS */
+        .section { padding: 90px 0; }
+        .section-alt { background: var(--bg-secondary); }
+        .section-header { text-align: center; margin-bottom: 55px; }
+        .section-badge {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 14px;
+            color: var(--text);
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 550px;
+            margin: 0 auto;
         }
 
         /* ABOUT */
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
         }
-
-        .about-grid img {
+        .about-img {
             width: 100%;
-            border-radius: 10px;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
         }
-
-        .about-info h3 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
+        .about-content h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .about-content p { color: var(--text-secondary); line-height: 1.8; margin-bottom: 24px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .info-card {
+            background: var(--bg);
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
+        .info-card:hover { border-color: var(--accent); box-shadow: var(--shadow-sm); }
+        .info-card .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .info-card .value { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
-        .about-info p {
-            color: #777;
-            margin-bottom: 20px;
-        }
-
-        .contact-row {
+        /* SERVICES */
+        .services-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
         }
-
-        .contact-item {
-            background: #fff;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #eee;
+        .service-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px 28px;
+            transition: var(--transition);
+            text-align: center;
         }
-
-        .contact-item strong {
-            display: block;
-            font-size: 0.7rem;
-            color: #999;
-            text-transform: uppercase;
+        .service-card:hover {
+            border-color: transparent;
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-4px);
         }
+        .service-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .service-card:nth-child(1) .service-icon { background: var(--accent-light); color: var(--accent); }
+        .service-card:nth-child(2) .service-icon { background: var(--purple-light); color: var(--purple); }
+        .service-card:nth-child(3) .service-icon { background: var(--green-light); color: var(--green); }
+        .service-card:nth-child(4) .service-icon { background: var(--orange-light); color: var(--orange); }
+        .service-card:nth-child(5) .service-icon { background: var(--red-light); color: var(--red); }
+        .service-card:nth-child(6) .service-icon { background: var(--accent-light); color: var(--accent); }
+        .service-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .service-card p { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; }
 
-        /* CARDS */
-        .cards-grid {
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .project-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .project-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-3px); }
+        .project-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: var(--bg-secondary);
+        }
+        .project-body { padding: 24px; }
+        .project-body h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .project-body .desc { color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6; margin-bottom: 14px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+        .tag {
+            background: var(--bg-secondary);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+        .project-links { display: flex; gap: 10px; }
+
+        /* ANNOUNCEMENTS */
+        .announcements-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
-
-        .card {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-        }
-
-        .card h4 {
-            margin-bottom: 8px;
-        }
-
-        .card p {
-            color: #777;
-            font-size: 0.85rem;
-        }
-
-        .icon-box {
-            width: 50px;
-            height: 50px;
-            background: #f5f5f5;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-weight: 700;
-        }
-
-        .card:hover .icon-box {
-            background: #111;
-            color: #fff;
-        }
-
-        /* PROJECTS */
-        .project-card {
-            padding: 0;
-            overflow: hidden;
-            text-align: left;
-        }
-
-        .project-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .project-body {
-            padding: 18px;
-        }
-
-        .tags {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            margin: 8px 0 12px;
-        }
-
-        .tag {
-            background: #f0f0f0;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-        }
-
-        /* ANNOUNCEMENTS */
-        .announcement {
-            background: #fff;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 22px;
+        .announcement-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            transition: var(--transition);
             position: relative;
-            text-align: left;
         }
-
-        .announcement.important {
-            border-left: 4px solid #e74c3c;
-        }
-
-        .badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #111;
-            color: #fff;
+        .announcement-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+        .announcement-card.important { border-left: 4px solid var(--red); background: var(--red-light); }
+        .ann-badge {
+            display: inline-block;
             padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.65rem;
-            font-weight: 700;
-        }
-
-        .announcement h4 {
-            margin-bottom: 6px;
-            padding-right: 70px;
-        }
-
-        .announcement p {
-            color: #777;
-            font-size: 0.85rem;
-        }
-
-        .date {
-            color: #aaa;
+            border-radius: 6px;
             font-size: 0.7rem;
-            margin-top: 8px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        .ann-badge.new { background: var(--accent-light); color: var(--accent); }
+        .ann-badge.hot { background: var(--red-light); color: var(--red); }
+        .ann-badge.top { background: var(--purple-light); color: var(--purple); }
+        .ann-badge.sale { background: var(--green-light); color: var(--green); }
+        .ann-badge.vip { background: var(--orange-light); color: var(--orange); }
+        .ann-badge.pro { background: var(--accent-light); color: var(--accent); }
+        .announcement-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+        .announcement-card p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; }
+        .ann-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 12px; }
 
         /* CONTACT */
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
+            align-items: start;
         }
-
-        .contact-box {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 30px;
+        .contact-info {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
         }
-
-        .contact-box h3 {
-            margin-bottom: 18px;
-            font-size: 1.3rem;
-        }
-
-        .contact-row-info {
+        .contact-info h3 { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; color: var(--text); }
+        .contact-item {
             display: flex;
-            gap: 12px;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
         }
-
-        .contact-icon-sm {
-            width: 40px;
-            height: 40px;
-            background: #f5f5f5;
-            border-radius: 8px;
+        .contact-item:last-child { border-bottom: none; }
+        .contact-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
+            flex-shrink: 0;
         }
+        .contact-item:nth-child(1) .contact-icon-box { background: var(--accent-light); color: var(--accent); }
+        .contact-item:nth-child(2) .contact-icon-box { background: var(--green-light); color: var(--green); }
+        .contact-item:nth-child(3) .contact-icon-box { background: var(--purple-light); color: var(--purple); }
+        .contact-item:nth-child(4) .contact-icon-box { background: var(--orange-light); color: var(--orange); }
+        .contact-item .c-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+        .contact-item .c-value { font-weight: 600; font-size: 0.9rem; color: var(--text); }
 
-        .contact-label {
-            font-size: 0.7rem;
-            color: #999;
+        .contact-form-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px;
         }
-
-        .contact-value {
-            font-weight: 600;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group input,
-        .form-group textarea {
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .contact-form input,
+        .contact-form textarea {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            padding: 13px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
             font-family: inherit;
-        }
-
-        .form-group textarea {
-            height: 120px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            background: var(--bg-secondary);
             resize: vertical;
         }
-
+        .contact-form textarea { min-height: 130px; }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg);
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+        }
         .btn-submit {
-            width: 100%;
-            padding: 14px;
-            background: #111;
+            background: var(--primary);
             color: #fff;
-            border: none;
-            border-radius: 30px;
+            padding: 15px;
+            border-radius: 10px;
             font-weight: 700;
+            border: none;
             cursor: pointer;
             font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: inherit;
         }
+        .btn-submit:hover { background: var(--primary-hover); }
 
         /* FOOTER */
-        footer {
-            background: #111;
+        .footer {
+            background: var(--text);
             color: #fff;
-            padding: 50px 0 25px;
+            padding: 60px 0 30px;
+            margin-top: 60px;
         }
-
         .footer-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 40px;
         }
-
-        .footer-grid h4 {
-            margin-bottom: 10px;
+        .footer-brand h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; color: #fff; }
+        .footer-brand p { color: rgba(255,255,255,0.5); font-size: 0.85rem; line-height: 1.7; }
+        .footer-col h5 {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            margin-bottom: 18px;
+            color: rgba(255,255,255,0.6);
         }
-
-        .footer-grid p,
-        .footer-grid a {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.82rem;
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a {
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
-            display: block;
-            margin-bottom: 6px;
+            font-size: 0.85rem;
+            transition: var(--transition);
         }
-
-        .footer-grid a:hover {
-            color: #fff;
-        }
-
+        .footer-col ul li a:hover { color: #fff; }
         .footer-bottom {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.4);
-            font-size: 0.75rem;
+            padding-top: 25px;
+            margin-top: 35px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.3);
+            font-size: 0.78rem;
         }
+        .footer-bottom a { color: rgba(255,255,255,0.5); text-decoration: none; }
+        .footer-bottom a:hover { color: #fff; }
 
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #111;
-            color: #fff;
-            padding: 14px 22px;
-            border-radius: 8px;
-            z-index: 9999;
+        .toast { position: fixed; bottom: 24px; right: 24px; background: var(--text); color: #fff; padding: 14px 22px; border-radius: 10px; z-index: 9999; animation: slideIn 0.3s ease; font-size: 0.85rem; box-shadow: var(--shadow-xl); }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+        .loading { text-align: center; padding: 50px; color: var(--text-muted); grid-column: 1 / -1; }
+        .empty { text-align: center; padding: 50px; color: var(--text-muted); grid-column: 1 / -1; }
+
+        @media (max-width: 968px) {
+            .services-grid { grid-template-columns: 1fr 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .announcements-grid { grid-template-columns: 1fr 1fr; }
+            .about-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .hero h1 { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
         }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            grid-column: 1 / -1;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 40px;
-            color: #999;
-            grid-column: 1 / -1;
-        }
-
-        @media (max-width: 900px) {
-            .cards-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .about-grid,
-            .contact-grid {
-                grid-template-columns: 1fr;
-            }
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
         @media (max-width: 600px) {
-            .cards-grid {
-                grid-template-columns: 1fr;
-            }
-            .hero h1 {
-                font-size: 2rem;
-            }
-            .nav-links {
-                gap: 15px;
-            }
+            .services-grid { grid-template-columns: 1fr; }
+            .announcements-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+            .stats-bar { gap: 30px; }
+            .nav-cta { display: none; }
         }
     </style>
 </head>
@@ -484,9 +520,9 @@
 
     <nav class="navbar">
         <div class="nav-inner">
-            <a href="#" class="logo">
-                <img src="https://i.postimg.cc/DZbR6RMj/Chat-GPT-Image-May-8-2026-11-17-36-PM.png" alt="Logo">
-                MA Developers
+            <a href="#" class="nav-brand">
+                <img src="https://i.postimg.cc/DZbR6RMj/Chat-GPT-Image-May-8-2026-11-17-36-PM.png" alt="MA Developers">
+                <span>MA Developers</span>
             </a>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
@@ -494,33 +530,42 @@
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#announcements">Updates</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="/admin-login" class="nav-cta">Admin</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="hero">
         <div class="container">
-            <img src="https://i.postimg.cc/RhBpRhfJ/Chat-GPT-Image-Apr-26-2026-05-36-03-PM.png" alt="Muhammad Ayan">
-            <h1>Muhammad Ayan</h1>
-            <p style="color:#777;">Founder & Lead Developer at MA Developers</p>
-            <p>Full-stack developer building modern web applications. Expert in React, Node.js, and cloud architecture.</p>
-            <a href="#projects" class="btn btn-black">View Projects</a>
-            <a href="#contact" class="btn btn-outline">Contact Me</a>
+            <div class="hero-badge"><span class="dot"></span> Available for New Projects</div>
+            <h1>We Build <span class="highlight">Digital Products</span> That Scale</h1>
+            <p>MA Developers is a premier software development company specializing in building cutting-edge web applications, SaaS products, and mobile apps. From concept to launch, we build products that users love and businesses rely on.</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">View Our Work</a>
+                <a href="#contact" class="btn btn-secondary">Start a Project</a>
+            </div>
+            <div class="stats-bar">
+                <div class="stat-item"><div class="stat-number" id="projectCount">0</div><div class="stat-label">Projects Delivered</div></div>
+                <div class="stat-item"><div class="stat-number">30+</div><div class="stat-label">Happy Clients</div></div>
+                <div class="stat-item"><div class="stat-number">5+</div><div class="stat-label">Years Experience</div></div>
+                <div class="stat-item"><div class="stat-number">24/7</div><div class="stat-label">Support Available</div></div>
+            </div>
         </div>
     </section>
 
-    <section class="section section-gray" id="about">
+    <section class="section section-alt" id="about">
         <div class="container">
             <div class="about-grid">
-                <img src="https://i.postimg.cc/RhBpRhfJ/Chat-GPT-Image-Apr-26-2026-05-36-03-PM.png" alt="Muhammad Ayan">
-                <div class="about-info">
-                    <h3>About Muhammad Ayan</h3>
-                    <p>I am a passionate full-stack developer with years of experience crafting digital solutions. As the founder of MA Developers, I help businesses transform ideas into powerful web applications.</p>
-                    <div class="contact-row">
-                        <div class="contact-item"><strong>Email</strong>madevelopersofficial@gmail.com</div>
-                        <div class="contact-item"><strong>Phone</strong>+48 450 462 870</div>
-                        <div class="contact-item"><strong>Location</strong>Worldwide / Remote</div>
-                        <div class="contact-item"><strong>Experience</strong>5+ Years</div>
+                <img src="https://i.postimg.cc/RhBpRhfJ/Chat-GPT-Image-Apr-26-2026-05-36-03-PM.png" alt="Muhammad Ayan" class="about-img">
+                <div class="about-content">
+                    <div class="section-badge">About Us</div>
+                    <h3>Muhammad Ayan - Founder & Lead Developer</h3>
+                    <p>MA Developers is a pioneer of cloud development company specializing in building cutting-edge SaaS products. We are committed to providing our clients with the best digital solutions. We believe in delivering exceptional quality, maintaining transparent communication, and building long-term partnerships.</p>
+                    <div class="info-grid">
+                        <div class="info-card"><div class="label">Email</div><div class="value">madevelopersofficial@gmail.com</div></div>
+                        <div class="info-card"><div class="label">Phone</div><div class="value">+48 450 462 870</div></div>
+                        <div class="info-card"><div class="label">Location</div><div class="value">Worldwide / Remote</div></div>
+                        <div class="info-card"><div class="label">Experience</div><div class="value">5+ Years</div></div>
                     </div>
                 </div>
             </div>
@@ -529,24 +574,30 @@
 
     <section class="section" id="services">
         <div class="container">
-            <h2 class="section-title">My Services</h2>
-            <p class="section-subtitle">Professional development services</p>
-            <div class="cards-grid">
-                <div class="card"><div class="icon-box">WD</div><h4>Web Development</h4><p>Custom websites with React, Next.js</p></div>
-                <div class="card"><div class="icon-box">EC</div><h4>E-Commerce</h4><p>Online stores with payment integration</p></div>
-                <div class="card"><div class="icon-box">MA</div><h4>Mobile Apps</h4><p>Cross-platform iOS and Android apps</p></div>
-                <div class="card"><div class="icon-box">UX</div><h4>UI/UX Design</h4><p>Beautiful interfaces that convert</p></div>
-                <div class="card"><div class="icon-box">AP</div><h4>API Development</h4><p>Robust RESTful and GraphQL APIs</p></div>
-                <div class="card"><div class="icon-box">SE</div><h4>SEO Optimization</h4><p>Improve rankings and traffic</p></div>
+            <div class="section-header">
+                <div class="section-badge">What We Do</div>
+                <h2 class="section-title">End-to-End Digital Product Development</h2>
+                <p class="section-subtitle">From design to deployment, we build complete solutions</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card"><div class="service-icon">WD</div><h4>Web Development</h4><p>Custom websites and web apps with React, Next.js, and modern frameworks.</p></div>
+                <div class="service-card"><div class="service-icon">EC</div><h4>E-Commerce</h4><p>Full-featured online stores with payment, inventory, and admin panel.</p></div>
+                <div class="service-card"><div class="service-icon">MA</div><h4>Mobile Apps</h4><p>Cross-platform native experiences for iOS and Android.</p></div>
+                <div class="service-card"><div class="service-icon">UX</div><h4>UI/UX Design</h4><p>Pixel-perfect interfaces and intuitive user journeys.</p></div>
+                <div class="service-card"><div class="service-icon">AP</div><h4>API Development</h4><p>Robust and scalable RESTful and GraphQL APIs.</p></div>
+                <div class="service-card"><div class="service-icon">SE</div><h4>SEO Optimization</h4><p>Improve your search rankings and drive organic growth.</p></div>
             </div>
         </div>
     </section>
 
-    <section class="section section-gray" id="projects">
+    <section class="section section-alt" id="projects">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <p class="section-subtitle">Recent work and case studies</p>
-            <div class="cards-grid" id="projectsGrid">
+            <div class="section-header">
+                <div class="section-badge">Our Work</div>
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Recent work we're proud of</p>
+            </div>
+            <div class="projects-grid" id="projectsGrid">
                 <div class="loading">Loading projects...</div>
             </div>
         </div>
@@ -554,56 +605,38 @@
 
     <section class="section" id="announcements">
         <div class="container">
-            <h2 class="section-title">Latest Updates</h2>
-            <p class="section-subtitle">Stay informed</p>
-            <div class="cards-grid" id="announcementsList">
+            <div class="section-header">
+                <div class="section-badge">News</div>
+                <h2 class="section-title">Latest Updates</h2>
+                <p class="section-subtitle">Stay informed about what's happening</p>
+            </div>
+            <div class="announcements-grid" id="announcementsList">
                 <div class="loading">Loading announcements...</div>
             </div>
         </div>
     </section>
 
-    <section class="section section-gray" id="contact">
+    <section class="section section-alt" id="contact">
         <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <p class="section-subtitle">Have a project? Let's discuss.</p>
+            <div class="section-header">
+                <div class="section-badge">Get In Touch</div>
+                <h2 class="section-title">Start a Project</h2>
+                <p class="section-subtitle">Have a project in mind? Let's discuss how we can help bring your ideas to life.</p>
+            </div>
             <div class="contact-grid">
-                <div class="contact-box">
-                    <h3>Get In Touch</h3>
-                    <div class="contact-row-info">
-                        <div class="contact-icon-sm">@</div>
-                        <div>
-                            <div class="contact-label">EMAIL</div>
-                            <div class="contact-value">madevelopersofficial@gmail.com</div>
-                        </div>
-                    </div>
-                    <div class="contact-row-info">
-                        <div class="contact-icon-sm">#</div>
-                        <div>
-                            <div class="contact-label">PHONE</div>
-                            <div class="contact-value">+48 450 462 870</div>
-                        </div>
-                    </div>
-                    <div class="contact-row-info">
-                        <div class="contact-icon-sm">*</div>
-                        <div>
-                            <div class="contact-label">LOCATION</div>
-                            <div class="contact-value">Worldwide / Remote</div>
-                        </div>
-                    </div>
-                    <div class="contact-row-info" style="border-bottom:none;">
-                        <div class="contact-icon-sm">+</div>
-                        <div>
-                            <div class="contact-label">RESPONSE TIME</div>
-                            <div class="contact-value">Within 24 Hours</div>
-                        </div>
-                    </div>
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item"><div class="contact-icon-box">@</div><div><div class="c-label">Email</div><div class="c-value">madevelopersofficial@gmail.com</div></div></div>
+                    <div class="contact-item"><div class="contact-icon-box">#</div><div><div class="c-label">Phone</div><div class="c-value">+48 450 462 870</div></div></div>
+                    <div class="contact-item"><div class="contact-icon-box">*</div><div><div class="c-label">Location</div><div class="c-value">Worldwide / Remote</div></div></div>
+                    <div class="contact-item"><div class="contact-icon-box">+</div><div><div class="c-label">Response Time</div><div class="c-value">Within 24 Hours</div></div></div>
                 </div>
-                <div class="contact-box">
+                <div class="contact-form-box">
                     <form id="contactForm" onsubmit="sendMessage(event)">
-                        <div class="form-group"><input type="text" id="name" placeholder="Your Full Name" required></div>
-                        <div class="form-group"><input type="email" id="email" placeholder="Your Email Address" required></div>
-                        <div class="form-group"><input type="text" id="subject" placeholder="Subject (Optional)"></div>
-                        <div class="form-group"><textarea id="message" placeholder="Tell me about your project..." required></textarea></div>
+                        <input type="text" id="name" placeholder="Your Full Name" required>
+                        <input type="email" id="email" placeholder="Your Email Address" required>
+                        <input type="text" id="subject" placeholder="Subject (Optional)">
+                        <textarea id="message" placeholder="Tell us about your project..." required></textarea>
                         <button type="submit" class="btn-submit">Send Message</button>
                     </form>
                 </div>
@@ -611,35 +644,42 @@
         </div>
     </section>
 
-    <footer>
+    <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div>
+                <div class="footer-brand">
                     <h4>MA Developers</h4>
-                    <p>Professional web development agency building digital solutions worldwide. Founded by Muhammad Ayan.</p>
+                    <p>Professional software development company building cutting-edge digital products. Founded by Muhammad Ayan.</p>
                 </div>
-                <div>
-                    <h4>Links</h4>
-                    <a href="#about">About</a>
-                    <a href="#services">Services</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#announcements">Updates</a>
+                <div class="footer-col">
+                    <h5>Links</h5>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#announcements">Updates</a></li>
+                    </ul>
                 </div>
-                <div>
-                    <h4>Services</h4>
-                    <a href="#services">Web Development</a>
-                    <a href="#services">E-Commerce</a>
-                    <a href="#services">Mobile Apps</a>
-                    <a href="#services">UI/UX Design</a>
+                <div class="footer-col">
+                    <h5>Services</h5>
+                    <ul>
+                        <li><a href="#services">Web Development</a></li>
+                        <li><a href="#services">E-Commerce</a></li>
+                        <li><a href="#services">Mobile Apps</a></li>
+                        <li><a href="#services">UI/UX Design</a></li>
+                    </ul>
                 </div>
-                <div>
-                    <h4>Contact</h4>
-                    <a href="mailto:madevelopersofficial@gmail.com">madevelopersofficial@gmail.com</a>
-                    <a href="tel:+48450462870">+48 450 462 870</a>
+                <div class="footer-col">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li><a href="mailto:madevelopersofficial@gmail.com">madevelopersofficial@gmail.com</a></li>
+                        <li><a href="tel:+48450462870">+48 450 462 870</a></li>
+                        <li>Worldwide / Remote</li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 MA Developers. All rights reserved. | Founder: Muhammad Ayan</p>
+                <p>&copy; 2025 <a href="#">MA Developers</a>. All rights reserved. | Founder: Muhammad Ayan</p>
             </div>
         </div>
     </footer>
@@ -647,13 +687,11 @@
     <div id="toastContainer"></div>
 
     <script>
-        // Supabase Client
         const supabase = window.supabase.createClient(
             'https://bmudvnppazuktxsvacts.supabase.co',
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJtdWR2bnBwYXp1a3R4c3ZhY3RzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY4MTk4MDAsImV4cCI6MjAzMjM5NTgwMH0.sb_publishable_REz_v5IUbHuqmFMWdhbjmg__rIvg97z'
         );
 
-        // Toast notification
         function showToast(msg) {
             var t = document.createElement('div');
             t.className = 'toast';
@@ -662,140 +700,74 @@
             setTimeout(function() { t.remove(); }, 3000);
         }
 
-        // LOAD PROJECTS
         async function loadProjects() {
             var grid = document.getElementById('projectsGrid');
-            
-            var result = await supabase
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false });
+            var result = await supabase.from('projects').select('*').order('created_at', { ascending: false });
 
-            console.log('Projects result:', result);
-
-            if (result.error) {
-                console.error('Projects error:', result.error);
-                grid.innerHTML = '<div class="empty">Error loading projects: ' + result.error.message + '</div>';
+            if (result.error || !result.data || result.data.length === 0) {
+                grid.innerHTML = '<div class="empty">No projects yet. Add projects from admin panel.</div>';
                 return;
             }
 
-            var data = result.data;
+            document.getElementById('projectCount').textContent = result.data.length;
 
-            if (!data || data.length === 0) {
-                grid.innerHTML = '<div class="empty">No projects found. Add projects from admin panel.</div>';
-                return;
-            }
-
-            var html = '';
-            for (var i = 0; i < data.length; i++) {
-                var p = data[i];
-                var imgHtml = p.image_url 
-                    ? '<img src="' + p.image_url + '" alt="' + p.title + '" style="width:100%;height:200px;object-fit:cover;" onerror="this.style.background=\'#f5f5f5\';this.src=\'\';">' 
-                    : '<div style="height:200px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#ccc;">' + p.title + '</div>';
+            grid.innerHTML = result.data.map(function(p) {
+                var img = p.image_url 
+                    ? '<img src="' + p.image_url + '" alt="' + p.title + '" class="project-img" onerror="this.style.background=\'#f1f5f9\';this.src=\'\';">'
+                    : '<div class="project-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;color:#94a3b8;background:#f1f5f9;">' + p.title.charAt(0) + '</div>';
                 
-                var techs = p.technologies ? p.technologies.split(',') : [];
-                var tagsHtml = '';
-                for (var j = 0; j < techs.length; j++) {
-                    tagsHtml += '<span class="tag">' + techs[j].trim() + '</span>';
-                }
+                var tags = (p.technologies || '').split(',').map(function(t) { return '<span class="tag">' + t.trim() + '</span>'; }).join('');
+                
+                var links = '';
+                if (p.live_url) links += '<a href="' + p.live_url + '" target="_blank" class="btn btn-primary btn-sm">Live Demo</a> ';
+                if (p.github_url) links += '<a href="' + p.github_url + '" target="_blank" class="btn btn-secondary btn-sm">Source Code</a>';
 
-                var linksHtml = '';
-                if (p.live_url) linksHtml += '<a href="' + p.live_url + '" target="_blank" class="btn btn-black btn-sm">Live Demo</a> ';
-                if (p.github_url) linksHtml += '<a href="' + p.github_url + '" target="_blank" class="btn btn-outline btn-sm">GitHub</a>';
-
-                html += '<div class="card project-card">' +
-                    imgHtml +
-                    '<div class="project-body">' +
-                    '<h4>' + p.title + '</h4>' +
-                    '<p style="color:#777;font-size:0.85rem;">' + (p.description || '') + '</p>' +
-                    '<div class="tags">' + tagsHtml + '</div>' +
-                    linksHtml +
-                    '</div>' +
-                    '</div>';
-            }
-
-            grid.innerHTML = html;
+                return '<div class="project-card">' + img + '<div class="project-body"><h4>' + p.title + '</h4><p class="desc">' + (p.description || '') + '</p><div class="tags">' + tags + '</div><div class="project-links">' + links + '</div></div></div>';
+            }).join('');
         }
 
-        // LOAD ANNOUNCEMENTS
         async function loadAnnouncements() {
             var list = document.getElementById('announcementsList');
+            var result = await supabase.from('announcements').select('*').order('created_at', { ascending: false }).limit(6);
 
-            var result = await supabase
-                .from('announcements')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(6);
-
-            console.log('Announcements result:', result);
-
-            if (result.error) {
-                console.error('Announcements error:', result.error);
-                list.innerHTML = '<div class="empty">Error loading announcements.</div>';
-                return;
-            }
-
-            var data = result.data;
-
-            if (!data || data.length === 0) {
+            if (result.error || !result.data || result.data.length === 0) {
                 list.innerHTML = '<div class="empty">No announcements yet.</div>';
                 return;
             }
 
-            var badges = ['NEW', 'HOT', 'TOP', 'SALE', 'VIP', 'PRO'];
-            var html = '';
+            var badges = ['new', 'hot', 'top', 'sale', 'vip', 'pro'];
+            var badgeNames = ['NEW', 'HOT', 'TOP', 'SALE', 'VIP', 'PRO'];
 
-            for (var i = 0; i < data.length; i++) {
-                var a = data[i];
-                var badgeText = a.important ? 'IMPORTANT' : badges[i];
-                var importantClass = a.important ? ' important' : '';
-                var dateStr = new Date(a.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-
-                html += '<div class="announcement' + importantClass + '">' +
-                    '<span class="badge">' + badgeText + '</span>' +
+            list.innerHTML = result.data.map(function(a, i) {
+                var badgeClass = a.important ? 'hot' : badges[i];
+                var badgeName = a.important ? 'IMPORTANT' : badgeNames[i];
+                return '<div class="announcement-card' + (a.important ? ' important' : '') + '">' +
+                    '<span class="ann-badge ' + badgeClass + '">' + badgeName + '</span>' +
                     '<h4>' + a.title + '</h4>' +
                     '<p>' + a.description + '</p>' +
-                    '<div class="date">' + dateStr + '</div>' +
+                    '<div class="ann-date">' + new Date(a.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) + '</div>' +
                     '</div>';
-            }
-
-            list.innerHTML = html;
+            }).join('');
         }
 
-        // SEND MESSAGE
         async function sendMessage(e) {
             e.preventDefault();
-
             var name = document.getElementById('name').value.trim();
             var email = document.getElementById('email').value.trim();
             var subject = document.getElementById('subject').value.trim();
             var message = document.getElementById('message').value.trim();
 
-            if (!name || !email || !message) {
-                showToast('Please fill all required fields.');
-                return;
-            }
+            if (!name || !email || !message) { showToast('Please fill all required fields.'); return; }
 
             var fullMsg = subject ? '[' + subject + '] ' + message : message;
+            var result = await supabase.from('messages').insert([{ name: name, email: email, message: fullMsg }]);
 
-            var result = await supabase
-                .from('messages')
-                .insert([{ name: name, email: email, message: fullMsg }]);
-
-            if (result.error) {
-                showToast('Failed to send. Please try again.');
-                console.error(result.error);
-            } else {
-                showToast('Message sent successfully! I will respond within 24 hours.');
-                document.getElementById('contactForm').reset();
-            }
+            if (result.error) { showToast('Failed to send. Try again.'); }
+            else { showToast('Message sent! We will respond within 24 hours.'); document.getElementById('contactForm').reset(); }
         }
 
-        // Initialize everything
         loadProjects();
         loadAnnouncements();
-
-        console.log('MA Developers site loaded. Check console for Supabase data.');
     </script>
 </body>
 </html>
